@@ -12,6 +12,7 @@ use App\Filament\Resources\TagihanPinjamen\Tables\TagihanPinjamenTable;
 use App\Filament\Resources\TagihanPinjamen\TagihanPinjamanResource\Pages;
 use Modules\Pinjaman\Models\TagihanPinjaman;
 use Filament\Forms;
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;

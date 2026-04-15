@@ -10,6 +10,7 @@ use App\Filament\Resources\Pinjamen\Schemas\PinjamanForm;
 use App\Filament\Resources\Pinjamen\PinjamanResource\Pages;
 use Modules\Pinjaman\Models\Pinjaman;
 use Filament\Forms;
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
