@@ -6,6 +6,10 @@ namespace App\Models;
 use Database\Factories\UserFactory;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use Modules\Sistem\Models\Agama;
+use Modules\Sistem\Models\Instansi;
+use Modules\Sistem\Models\Status;
+use Modules\Sistem\Models\UnitKerja;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -39,5 +43,25 @@ class User extends Authenticatable implements FilamentUser
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function agama()
+    {
+        return $this->belongsTo(Agama::class);
+    }
+
+    public function unitKerja()
+    {
+        return $this->belongsTo(UnitKerja::class);
+    }
+
+    public function instansi()
+    {
+        return $this->belongsTo(Instansi::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
     }
 }

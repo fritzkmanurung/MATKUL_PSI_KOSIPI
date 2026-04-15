@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Filament\Resources\Users\Schemas;
+
+use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Schema;
+
+class UserInfolist
+{
+    public static function configure(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                TextEntry::make('nip')
+                    ->placeholder('-'),
+                TextEntry::make('nik')
+                    ->placeholder('-'),
+                TextEntry::make('name'),
+                TextEntry::make('email')
+                    ->label('Email address'),
+                TextEntry::make('jenis_kelamin')
+                    ->badge()
+                    ->placeholder('-'),
+                TextEntry::make('tempat_lahir')
+                    ->placeholder('-'),
+                TextEntry::make('tanggal_lahir')
+                    ->date()
+                    ->placeholder('-'),
+                TextEntry::make('alamat')
+                    ->placeholder('-')
+                    ->columnSpanFull(),
+                TextEntry::make('no_hp')
+                    ->placeholder('-'),
+                TextEntry::make('email_verified_at')
+                    ->dateTime()
+                    ->placeholder('-'),
+                TextEntry::make('created_at')
+                    ->dateTime()
+                    ->placeholder('-'),
+                TextEntry::make('updated_at')
+                    ->dateTime()
+                    ->placeholder('-'),
+                TextEntry::make('agama_id')
+                    ->numeric()
+                    ->placeholder('-'),
+                TextEntry::make('unit_kerja_id')
+                    ->numeric()
+                    ->placeholder('-'),
+                TextEntry::make('instansi_id')
+                    ->numeric()
+                    ->placeholder('-'),
+                TextEntry::make('status_id')
+                    ->numeric()
+                    ->placeholder('-'),
+            ]);
+    }
+}

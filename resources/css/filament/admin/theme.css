@@ -1,0 +1,26 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+
+@layer base {
+    /* Responsive font scale injection for mobile-first */
+    html {
+        font-size: 14px; /* Slightly smaller base font for mobile */
+    }
+
+    @media (min-width: 768px) {
+        html {
+            font-size: 16px; /* Restore back to normal on desktop */
+        }
+    }
+
+    /* Force tables to be tighter on mobile to avoid excessive scrolls */
+    .fi-ta-content {
+        @apply p-0;
+    }
+    
+    .fi-ta-record {
+        @apply [&>td]:px-2 [&>td]:py-1 md:[&>td]:px-4 md:[&>td]:py-3;
+    }
+}
