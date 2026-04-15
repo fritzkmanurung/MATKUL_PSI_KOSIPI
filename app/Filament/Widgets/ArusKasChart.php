@@ -8,7 +8,7 @@ use Modules\Pinjaman\Models\Pinjaman;
 
 class ArusKasChart extends ChartWidget
 {
-    protected static ?string $heading = 'Grafik Arus Kas Bulanan (Tahun Berjalan)';
+    protected ?string $heading = 'Grafik Arus Kas Bulanan (Tahun Berjalan)';
     protected static ?int $sort = 2; // Tampil di urutan kedua
 
     public static function canView(): bool
