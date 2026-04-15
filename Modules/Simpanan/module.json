@@ -1,0 +1,11 @@
+{
+    "name": "Simpanan",
+    "alias": "simpanan",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Simpanan\\Providers\\SimpananServiceProvider"
+    ],
+    "files": []
+}

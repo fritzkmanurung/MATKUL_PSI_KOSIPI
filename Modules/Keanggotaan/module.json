@@ -1,0 +1,11 @@
+{
+    "name": "Keanggotaan",
+    "alias": "keanggotaan",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Keanggotaan\\Providers\\KeanggotaanServiceProvider"
+    ],
+    "files": []
+}
