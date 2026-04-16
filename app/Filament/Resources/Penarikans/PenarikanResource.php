@@ -22,7 +22,11 @@ class PenarikanResource extends Resource
 {
     protected static ?string $model = Penarikan::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArrowUpTray;
+
+    protected static ?string $navigationLabel = 'Penarikan';
+    protected static \UnitEnum|string|null $navigationGroup = 'Simpanan';
+    protected static ?int $navigationSort = 4;
 
     protected static ?string $recordTitleAttribute = 'id';
 

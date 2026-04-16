@@ -21,7 +21,11 @@ class BungaResource extends Resource
 {
     protected static ?string $model = Bunga::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalculator;
+
+    protected static ?string $navigationLabel = 'Suku Bunga';
+    protected static \UnitEnum|string|null $navigationGroup = 'Pinjaman';
+    protected static ?int $navigationSort = 7;
 
     protected static ?string $recordTitleAttribute = 'id';
 

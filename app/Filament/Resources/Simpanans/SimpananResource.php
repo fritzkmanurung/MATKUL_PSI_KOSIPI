@@ -22,7 +22,11 @@ class SimpananResource extends Resource
 {
     protected static ?string $model = Simpanan::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedWallet;
+
+    protected static ?string $navigationLabel = 'Simpanan';
+    protected static \UnitEnum|string|null $navigationGroup = 'Simpanan';
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $recordTitleAttribute = 'id';
 

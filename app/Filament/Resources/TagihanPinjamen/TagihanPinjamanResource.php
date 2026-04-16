@@ -24,7 +24,11 @@ class TagihanPinjamanResource extends Resource
 {
     protected static ?string $model = TagihanPinjaman::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
+
+    protected static ?string $navigationLabel = 'Tagihan Pinjaman';
+    protected static \UnitEnum|string|null $navigationGroup = 'Pinjaman';
+    protected static ?int $navigationSort = 6;
 
     protected static ?string $recordTitleAttribute = 'id';
 

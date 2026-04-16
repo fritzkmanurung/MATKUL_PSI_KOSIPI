@@ -29,7 +29,8 @@ class TagihanAnggotaResource extends Resource
             ->whereHas('pinjaman', fn ($q) => $q->where('user_id', auth()->id()));
     }
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
+    protected static ?int $navigationSort = 4;
 
     protected static ?string $recordTitleAttribute = 'id';
 

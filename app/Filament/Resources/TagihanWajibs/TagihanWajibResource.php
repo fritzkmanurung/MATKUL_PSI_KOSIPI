@@ -20,12 +20,13 @@ class TagihanWajibResource extends Resource
 {
     protected static ?string $model = TagihanWajib::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
     protected static ?string $modelLabel = 'Tagihan Simpanan Wajib';
     protected static ?string $pluralModelLabel = 'Tagihan Simpanan Wajib';
     protected static ?string $navigationLabel = 'Tagihan Wajib';
-
+    protected static \UnitEnum|string|null $navigationGroup = 'Tagihan';
+    protected static ?int $navigationSort = 8;
     protected static ?string $recordTitleAttribute = 'kode_tagihan';
 
     public static function form(Schema $schema): Schema

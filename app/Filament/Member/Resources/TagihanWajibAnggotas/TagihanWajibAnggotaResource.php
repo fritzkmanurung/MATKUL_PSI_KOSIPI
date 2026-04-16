@@ -22,7 +22,8 @@ class TagihanWajibAnggotaResource extends Resource
     protected static ?string $modelLabel = 'Tagihan Simpanan Wajib';
     protected static ?string $pluralModelLabel = 'Tagihan Simpanan Wajib';
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
+    protected static ?int $navigationSort = 5;
 
     protected static ?string $recordTitleAttribute = 'kode_tagihan';
 

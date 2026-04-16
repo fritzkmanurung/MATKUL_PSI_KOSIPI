@@ -24,7 +24,11 @@ class PinjamanResource extends Resource
 {
     protected static ?string $model = Pinjaman::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;
+
+    protected static ?string $navigationLabel = 'Pinjaman';
+    protected static \UnitEnum|string|null $navigationGroup = 'Pinjaman';
+    protected static ?int $navigationSort = 5;
 
     protected static ?string $recordTitleAttribute = 'id';
 

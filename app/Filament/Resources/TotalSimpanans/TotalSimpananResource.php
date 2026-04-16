@@ -25,7 +25,11 @@ class TotalSimpananResource extends Resource
 
     protected static ?string $model = TotalSimpanan::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChartBar;
+
+    protected static ?string $navigationLabel = 'Total Simpanan';
+    protected static \UnitEnum|string|null $navigationGroup = 'Simpanan';
+    protected static ?int $navigationSort = 3;
 
     protected static ?string $recordTitleAttribute = 'id';
 
