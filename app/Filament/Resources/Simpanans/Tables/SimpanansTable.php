@@ -40,7 +40,10 @@ class SimpanansTable
                         'Menunggu' => 'gray',
                         'Diterima' => 'success',
                         'Ditolak' => 'danger',
+                        default => 'primary',
                     }),
+                \Filament\Tables\Columns\ImageColumn::make('bukti_transfer')
+                    ->circular(),
                 \Filament\Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -49,7 +52,38 @@ class SimpanansTable
             ->filters([
                 TrashedFilter::make(),
             ])
-            ->recordActions([
+            ->headerActions([
+                \Filament\Tables\Actions\Action::make('export')
+                    ->label('Ekspor Laporan')
+                    ->icon('heroicon-m-arrow-down-tray')
+                    ->form([
+                        \Filament\Forms\Components\Select::make('format')
+                            ->label('Format File')
+                            ->options(['xlsx' => 'Excel (.xlsx)', 'csv' => 'CSV (.csv)'])
+                            ->default('xlsx')
+                            ->required(),
+                    ])
+                    ->action(function (array $data) {
+                        $records = \Modules\Simpanan\Models\Simpanan::with('user')->get();
+                        
+                        return response()->streamDownload(function () use ($data, $records) {
+                            $writer = \Spatie\SimpleExcel\SimpleExcelWriter::stream('php://output', $data['format']);
+                            
+                            foreach ($records as $record) {
+                                $writer->addRow([
+                                    'Kode' => $record->kode_simpanan,
+                                    'Anggota' => $record->user ? $record->user->name : '-',
+                                    'Jenis' => $record->jenis_simpanan,
+                                    'Nominal' => $record->nominal_simpanan,
+                                    'Status' => $record->status,
+                                    'Tanggal' => $record->created_at->format('Y-m-d H:i')
+                                ]);
+                            }
+                            $writer->close();
+                        }, 'Laporan_Simpanan_' . date('Y_m_d_His') . '.' . $data['format']);
+                    }),
+            ])
+            ->bulkActions([
                 ViewAction::make(),
                 EditAction::make(),
             ])

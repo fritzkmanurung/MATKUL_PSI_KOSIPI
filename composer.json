@@ -12,7 +12,8 @@
         "laravel/framework": "^13.0",
         "laravel/tinker": "^3.0",
         "nwidart/laravel-modules": "^13.0",
-        "spatie/laravel-permission": "^7.3"
+        "spatie/laravel-permission": "^7.3",
+        "spatie/simple-excel": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

@@ -17,7 +17,25 @@ class SimpananAnggotasTable
     {
         return $table
             ->columns([
-                //
+                \Filament\Tables\Columns\TextColumn::make('jenis_simpanan')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Pokok' => 'gray',
+                        'Wajib' => 'primary',
+                        'Sukarela' => 'success',
+                    }),
+                \Filament\Tables\Columns\TextColumn::make('nominal_simpanan')
+                    ->money('IDR')
+                    ->sortable(),
+                \Filament\Tables\Columns\TextColumn::make('status')
+                    ->badge(),
+                \Filament\Tables\Columns\ImageColumn::make('bukti_transfer')
+                    ->label('Bukti')
+                    ->circular(),
+                \Filament\Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime('d M Y')
+                    ->label('Tanggal')
+                    ->sortable(),
             ])
             ->filters([
                 TrashedFilter::make(),
