@@ -19,7 +19,7 @@ class TagihanAnggotasTable
                 //
             ])
             ->filters([
-                TrashedFilter::make(),
+                //
             ])
             ->recordActions([
                 EditAction::make(),

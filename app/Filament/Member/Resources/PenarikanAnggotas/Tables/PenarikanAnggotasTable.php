@@ -20,7 +20,7 @@ class PenarikanAnggotasTable
                 //
             ])
             ->filters([
-                TrashedFilter::make(),
+                //
             ])
             ->recordActions([
                 ViewAction::make(),

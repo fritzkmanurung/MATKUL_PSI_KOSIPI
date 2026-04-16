@@ -20,7 +20,7 @@ class PinjamanAnggotasTable
                 //
             ])
             ->filters([
-                TrashedFilter::make(),
+                //
             ])
             ->recordActions([
                 ViewAction::make(),

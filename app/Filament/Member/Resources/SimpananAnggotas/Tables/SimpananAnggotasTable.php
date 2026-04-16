@@ -38,7 +38,7 @@ class SimpananAnggotasTable
                     ->sortable(),
             ])
             ->filters([
-                TrashedFilter::make(),
+                //
             ])
             ->recordActions([
                 ViewAction::make(),
