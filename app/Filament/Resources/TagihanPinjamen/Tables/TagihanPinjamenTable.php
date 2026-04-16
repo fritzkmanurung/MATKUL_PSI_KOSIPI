@@ -42,10 +42,10 @@ class TagihanPinjamenTable
                     }),
             ])
             ->filters([
-                TrashedFilter::make(),
+                //
             ])
             ->headerActions([
-                \Filament\Tables\Actions\Action::make('export')
+                \Filament\Actions\Action::make('export')
                     ->label('Ekspor Rekap Tagihan')
                     ->icon('heroicon-m-arrow-down-tray')
                     ->form([
@@ -77,9 +77,9 @@ class TagihanPinjamenTable
                         }, 'Rekap_Tagihan_Pinjaman_' . date('Y_m_d_His') . '.' . $data['format']);
                     }),
             ])
-            ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
+            ->actions([
+                \Filament\Actions\ViewAction::make(),
+                \Filament\Actions\EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

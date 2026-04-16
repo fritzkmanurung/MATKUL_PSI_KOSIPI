@@ -50,10 +50,10 @@ class SimpanansTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                TrashedFilter::make(),
+                //
             ])
             ->headerActions([
-                \Filament\Tables\Actions\Action::make('export')
+                \Filament\Actions\Action::make('export')
                     ->label('Ekspor Laporan')
                     ->icon('heroicon-m-arrow-down-tray')
                     ->form([
@@ -83,9 +83,9 @@ class SimpanansTable
                         }, 'Laporan_Simpanan_' . date('Y_m_d_His') . '.' . $data['format']);
                     }),
             ])
-            ->bulkActions([
-                ViewAction::make(),
-                EditAction::make(),
+            ->actions([
+                \Filament\Actions\ViewAction::make(),
+                \Filament\Actions\EditAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Pinjamen\Schemas;
 use Filament\Forms\Components;
 use Filament\Forms;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
 
 class PinjamanForm
 {
@@ -12,7 +13,7 @@ class PinjamanForm
     {
         return $schema
             ->components([
-                Forms\Components\Section::make('Syarat Pengajuan Kredit')
+                Section::make('Syarat Pengajuan Kredit')
                     ->schema([
                         Forms\Components\Select::make('user_id')
                             ->relationship('user', 'name')
@@ -43,7 +44,7 @@ class PinjamanForm
                             ->columnSpanFull(),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Profil Kreditur')
+                Section::make('Profil Kreditur')
                     ->schema([
                         Forms\Components\Select::make('status_pegawai')
                             ->options(['Kontrak' => 'Kontrak', 'Tetap' => 'Tetap'])
@@ -59,7 +60,7 @@ class PinjamanForm
                             ->required(),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Persetujuan Admin')
+                Section::make('Persetujuan Admin')
                     ->schema([
                         Forms\Components\Select::make('status')
                             ->options([

@@ -5,6 +5,7 @@ namespace App\Filament\Member\Resources\PinjamanAnggotas\Schemas;
 use Filament\Forms\Components;
 use Filament\Forms;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
 
 class PinjamanAnggotaForm
 {
@@ -14,7 +15,7 @@ class PinjamanAnggotaForm
             ->components([
                 Forms\Components\Grid::make(['default' => 1, 'md' => 2])
                     ->schema([
-                        Forms\Components\Section::make('Kalkulator Kredit')
+                        Section::make('Kalkulator Kredit')
                             ->schema([
                                 Forms\Components\TextInput::make('jumlah_pinjaman')
                                     ->required()
@@ -27,7 +28,7 @@ class PinjamanAnggotaForm
                                     ->suffix('Bulan')
                                     ->label('Lama Angsuran'),
                             ])->columnSpan(1),
-                        Forms\Components\Section::make('Dasar Pengajuan')
+                        Section::make('Dasar Pengajuan')
                             ->schema([
                                 Forms\Components\Textarea::make('alasan')
                                     ->required()

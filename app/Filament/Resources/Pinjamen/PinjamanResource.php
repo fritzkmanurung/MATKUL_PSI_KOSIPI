@@ -7,6 +7,8 @@ use App\Filament\Resources\Pinjamen\Pages\EditPinjaman;
 use App\Filament\Resources\Pinjamen\Pages\ListPinjamen;
 use App\Filament\Resources\Pinjamen\Pages\ViewPinjaman;
 use App\Filament\Resources\Pinjamen\Schemas\PinjamanForm;
+use App\Filament\Resources\Pinjamen\Schemas\PinjamanInfolist;
+use App\Filament\Resources\Pinjamen\Tables\PinjamenTable;
 use App\Filament\Resources\Pinjamen\PinjamanResource\Pages;
 use Modules\Pinjaman\Models\Pinjaman;
 use Filament\Forms;
@@ -60,9 +62,6 @@ class PinjamanResource extends Resource
 
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
-        return parent::getRecordRouteBindingEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
+        return parent::getRecordRouteBindingEloquentQuery();
     }
 }

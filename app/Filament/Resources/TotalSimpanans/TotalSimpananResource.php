@@ -18,6 +18,11 @@ use Filament\Tables\Table;
 
 class TotalSimpananResource extends Resource
 {
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
     protected static ?string $model = TotalSimpanan::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
@@ -50,7 +55,6 @@ class TotalSimpananResource extends Resource
     {
         return [
             'index' => ListTotalSimpanans::route('/'),
-            'create' => CreateTotalSimpanan::route('/create'),
             'view' => ViewTotalSimpanan::route('/{record}'),
             'edit' => EditTotalSimpanan::route('/{record}/edit'),
         ];

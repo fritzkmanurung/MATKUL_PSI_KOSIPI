@@ -5,6 +5,7 @@ namespace App\Filament\Member\Resources\TagihanAnggotas\Schemas;
 use Filament\Forms\Components;
 use Filament\Forms;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Section;
 
 class TagihanAnggotaForm
 {
@@ -12,7 +13,7 @@ class TagihanAnggotaForm
     {
         return $schema
             ->components([
-                Forms\Components\Section::make('Rincian Tagihan')
+                Section::make('Rincian Tagihan')
                     ->schema([
                         Forms\Components\TextInput::make('kode_tagihan')
                             ->label('Nomor Tagihan')
@@ -26,7 +27,7 @@ class TagihanAnggotaForm
                             ->disabled(),
                     ])->columns(['sm' => 1, 'md' => 3]),
 
-                Forms\Components\Section::make('Konfirmasi Pembayaran')
+                Section::make('Konfirmasi Pembayaran')
                     ->schema([
                         Forms\Components\FileUpload::make('bukti_bayar_transfer')
                             ->image()
