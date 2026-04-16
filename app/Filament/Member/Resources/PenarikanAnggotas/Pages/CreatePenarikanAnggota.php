@@ -13,6 +13,7 @@ class CreatePenarikanAnggota extends CreateRecord
     {
         $data['user_id'] = auth()->id();
         $data['status'] = 'Menunggu';
+        $data['tanggal_penarikan'] = now()->toDateString();
         return $data;
     }
 }

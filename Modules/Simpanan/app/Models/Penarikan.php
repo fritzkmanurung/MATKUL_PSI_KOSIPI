@@ -20,6 +20,11 @@ class Penarikan extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function simpanan()
+    {
+        return $this->belongsTo(Simpanan::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      */

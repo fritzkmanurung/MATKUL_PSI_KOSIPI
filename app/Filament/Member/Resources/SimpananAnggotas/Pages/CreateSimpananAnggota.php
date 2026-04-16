@@ -13,6 +13,10 @@ class CreateSimpananAnggota extends CreateRecord
     {
         $data['user_id'] = auth()->id();
         $data['status'] = 'Menunggu';
+        $data['waktu_simpanan'] = now()->toDateString();
+        $data['periode'] = now()->format('Y');
+        $data['bulan'] = now()->format('m');
+        $data['jenis_pembayaran'] = 'Transfer';
         return $data;
     }
 }

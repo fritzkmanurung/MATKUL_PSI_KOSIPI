@@ -27,6 +27,7 @@ class MemberPanelProvider extends PanelProvider
             ->id('member')
             ->path('member')
             ->login()
+            ->profile(\App\Filament\Member\Pages\EditProfile::class)
             ->colors([
                 'primary' => Color::Teal,
             ])

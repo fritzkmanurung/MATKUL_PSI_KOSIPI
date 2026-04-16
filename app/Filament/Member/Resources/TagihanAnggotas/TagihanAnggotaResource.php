@@ -20,8 +20,8 @@ class TagihanAnggotaResource extends Resource
 {
     protected static ?string $model = TagihanPinjaman::class;
 
-    protected static ?string $modelLabel = 'Tagihan Angsuran Pribadi';
-    protected static ?string $pluralModelLabel = 'Jadwal Tagihan Saya';
+    protected static ?string $modelLabel = 'Tagihan Angsuran Pinjaman';
+    protected static ?string $pluralModelLabel = 'Tagihan Angsuran Pinjaman';
 
     public static function getEloquentQuery(): Builder
     {

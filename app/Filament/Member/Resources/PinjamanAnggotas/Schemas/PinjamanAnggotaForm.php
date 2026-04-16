@@ -6,6 +6,7 @@ use Filament\Forms\Components;
 use Filament\Forms;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Grid;
 
 class PinjamanAnggotaForm
 {
@@ -13,7 +14,7 @@ class PinjamanAnggotaForm
     {
         return $schema
             ->components([
-                Forms\Components\Grid::make(['default' => 1, 'md' => 2])
+                Grid::make(['default' => 1, 'md' => 2])
                     ->schema([
                         Section::make('Kalkulator Kredit')
                             ->schema([
