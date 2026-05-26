@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal('nominal_pokok', 12, 2);
             $table->decimal('nominal_bunga', 12, 2);
             $table->decimal('total_tagihan', 12, 2);
+            $table->decimal('denda', 12, 2)->default(0);
             $table->string('status', 30)->default('Belum Dibayar'); // Belum Dibayar, Menunggu Verifikasi, Lunas, Ditolak
             $table->string('bukti_bayar_transfer')->nullable();
             $table->date('tanggal_bayar')->nullable();

@@ -21,12 +21,12 @@ return new class extends Migration
             $table->string('alasan');
             $table->enum('status_pegawai', ['Kontrak', 'Tetap']);
             $table->unsignedInteger('masa_kontrak')->nullable(); // Dalam bulan
-            $table->enum('status_perkawinan', ['Belum Kawin', 'Sudah Kawin']);
-            $table->string('nama_suami_istri', 150)->nullable();
+
             $table->string('pekerjaan', 100);
             $table->string('status')->default('Menunggu'); // Menunggu, Disetujui, Ditolak, Lunas
             $table->string('dokumen_persetujuan_1')->nullable();
             $table->string('dokumen_persetujuan_2')->nullable();
+            $table->string('bukti_transfer_admin')->nullable();
             $table->timestamp('tanggal_pinjaman')->nullable();
             $table->text('catatan_penolakan')->nullable();
             $table->timestamps();
