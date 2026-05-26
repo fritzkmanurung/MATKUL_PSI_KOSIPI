@@ -54,10 +54,7 @@ class BungaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListBungas::route('/'),
-            'create' => CreateBunga::route('/create'),
-            'view' => ViewBunga::route('/{record}'),
-            'edit' => EditBunga::route('/{record}/edit'),
+            'index' => Pages\ManageBungas::route('/'),
         ];
     }
 }

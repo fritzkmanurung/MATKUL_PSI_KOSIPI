@@ -7,6 +7,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 
 class UsersTable
@@ -15,60 +16,50 @@ class UsersTable
     {
         return $table
             ->columns([
-                TextColumn::make('nip')
-                    ->searchable(),
-                TextColumn::make('nik')
-                    ->searchable(),
+                ImageColumn::make('member.foto_profil')
+                    ->label('Foto')
+                    ->circular(),
+                TextColumn::make('member.nba')
+                    ->label('NBA')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('name')
+                    ->label('Nama')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('member.nip')
+                    ->label('NIP')
                     ->searchable(),
                 TextColumn::make('email')
                     ->label('Email address')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('member.no_hp')
+                    ->label('No. HP')
                     ->searchable(),
-                TextColumn::make('jenis_kelamin')
-                    ->badge(),
-                TextColumn::make('tempat_lahir')
+                TextColumn::make('member.unitKerja.nama')
+                    ->label('Unit Kerja')
+                    ->sortable()
                     ->searchable(),
-                TextColumn::make('tanggal_lahir')
+                TextColumn::make('member.status.nama')
+                    ->label('Status')
+                    ->badge()
+                    ->color('warning')
+                    ->sortable(),
+                TextColumn::make('member.tanggal_bergabung')
+                    ->label('Tgl Bergabung')
                     ->date()
-                    ->sortable(),
-                TextColumn::make('no_hp')
-                    ->searchable(),
-                TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('agama.nama')
-                    ->sortable()
-                    ->searchable(),
-                TextColumn::make('unitKerja.nama')
-                    ->label('Unit Kerja')
-                    ->sortable()
-                    ->searchable(),
-                TextColumn::make('instansi.nama')
-                    ->sortable()
-                    ->searchable(),
-                TextColumn::make('status.nama')
-                    ->sortable()
-                    ->searchable(),
             ])
             ->filters([
                 //
             ])
-            ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->actions(\App\Filament\Support\DefaultActionGroup::make('xl'))
+            ->toolbarActions([]);
     }
 }

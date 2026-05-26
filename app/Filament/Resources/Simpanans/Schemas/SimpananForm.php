@@ -17,6 +17,8 @@ class SimpananForm
                     ->searchable()
                     ->preload()
                     ->required()
+                    ->disabled(fn (?\Illuminate\Database\Eloquent\Model $record) => $record !== null)
+                    ->dehydrated()
                     ->label('Anggota Penyetor'),
                 Forms\Components\Select::make('jenis_simpanan')
                     ->options([
@@ -24,15 +26,21 @@ class SimpananForm
                         'Sukarela' => 'Simpanan Sukarela',
                         'Pokok' => 'Simpanan Pokok',
                     ])
-                    ->required(),
+                    ->required()
+                    ->disabled(fn (?\Illuminate\Database\Eloquent\Model $record) => $record !== null)
+                    ->dehydrated(),
                 Forms\Components\TextInput::make('nominal_simpanan')
                     ->required()
                     ->numeric()
                     ->prefix('Rp')
-                    ->maxValue(9999999999),
+                    ->maxValue(9999999999)
+                    ->disabled(fn (?\Illuminate\Database\Eloquent\Model $record) => $record !== null)
+                    ->dehydrated(),
                 Forms\Components\DatePicker::make('waktu_simpanan')
                     ->default(now())
-                    ->required(),
+                    ->required()
+                    ->disabled(fn (?\Illuminate\Database\Eloquent\Model $record) => $record !== null)
+                    ->dehydrated(),
                 Forms\Components\Select::make('status')
                     ->options([
                         'Menunggu' => 'Menunggu Verifikasi',
@@ -40,15 +48,21 @@ class SimpananForm
                         'Ditolak' => 'Ditolak',
                     ])
                     ->default('Menunggu')
-                    ->required(),
+                    ->required()
+                    ->live(),
                 Forms\Components\TextInput::make('jenis_pembayaran')
-                    ->maxLength(50),
+                    ->maxLength(50)
+                    ->disabled(fn (?\Illuminate\Database\Eloquent\Model $record) => $record !== null)
+                    ->dehydrated(),
                 Forms\Components\FileUpload::make('bukti_transfer')
                     ->image()
                     ->directory('bukti-simpanan')
+                    ->disabled(fn (?\Illuminate\Database\Eloquent\Model $record) => $record !== null)
+                    ->dehydrated()
                     ->columnSpanFull(),
                 Forms\Components\Textarea::make('catatan_penolakan')
-                    ->label('Catatan Penolakan (Jika ditolak)')
+                    ->label('Catatan Penolakan (Wajib diisi saat menolak)')
+                    ->visible(fn ($get) => $get('status') === 'Ditolak')
                     ->columnSpanFull(),
             ]);
     }

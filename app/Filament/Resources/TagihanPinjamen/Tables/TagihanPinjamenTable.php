@@ -10,6 +10,9 @@ use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use App\Filament\Support\MoneyFormatter;
+use App\Filament\Support\StatusHelper;
+use Filament\Tables\Columns\TextColumn;
 
 class TagihanPinjamenTable
 {
@@ -17,36 +20,37 @@ class TagihanPinjamenTable
     {
         return $table
             ->columns([
-                \Filament\Tables\Columns\TextColumn::make('kode_tagihan')
+                TextColumn::make('kode_tagihan')
                     ->searchable(),
-                \Filament\Tables\Columns\TextColumn::make('pinjaman.kode_pinjaman')
+                TextColumn::make('pinjaman.kode_pinjaman')
                     ->label('Kode Pinjaman')
                     ->sortable()
                     ->searchable(),
-                \Filament\Tables\Columns\TextColumn::make('tagihan_ke')
+                TextColumn::make('tagihan_ke')
                     ->numeric()
                     ->sortable(),
-                \Filament\Tables\Columns\TextColumn::make('jatuh_tempo')
+                TextColumn::make('jatuh_tempo')
                     ->date()
                     ->sortable(),
-                \Filament\Tables\Columns\TextColumn::make('total_tagihan')
-                    ->money('IDR')
+                MoneyFormatter::rupiah(
+                    TextColumn::make('total_tagihan')
+                )->sortable(),
+                MoneyFormatter::rupiah(
+                    TextColumn::make('denda')
+                )
+                    ->description(fn ($record) => $record->is_telat && $record->status !== 'Lunas' ? "{$record->jumlah_hari_telat} Hari" : null)
+                    ->color(fn ($record) => ($record->denda > 0 || $record->is_telat) && $record->status !== 'Lunas' ? 'danger' : null)
                     ->sortable(),
-                \Filament\Tables\Columns\TextColumn::make('status')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'Belum Dibayar' => 'warning',
-                        'Menunggu Verifikasi' => 'gray',
-                        'Lunas' => 'success',
-                        'Ditolak' => 'danger',
-                    }),
+                StatusHelper::applyBadge(
+                    TextColumn::make('status')
+                ),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
                 \Filament\Actions\Action::make('export')
-                    ->label('Ekspor Rekap Tagihan')
+                    ->label('Ekspor')
                     ->icon('heroicon-m-arrow-down-tray')
                     ->form([
                         \Filament\Forms\Components\Select::make('format')
@@ -56,12 +60,10 @@ class TagihanPinjamenTable
                             ->required(),
                     ])
                     ->action(function (array $data) {
-                        $records = \Modules\Pinjaman\Models\TagihanPinjaman::with('pinjaman.user')->get();
-                        
-                        return response()->streamDownload(function () use ($data, $records) {
+                        return response()->streamDownload(function () use ($data) {
                             $writer = \Spatie\SimpleExcel\SimpleExcelWriter::stream('php://output', $data['format']);
                             
-                            foreach ($records as $record) {
+                            \Modules\Pinjaman\Models\TagihanPinjaman::with('pinjaman.user')->cursor()->each(function ($record) use ($writer) {
                                 $writer->addRow([
                                     'Kode Tagihan' => $record->kode_tagihan,
                                     'Peminjam' => ($record->pinjaman && $record->pinjaman->user) ? $record->pinjaman->user->name : '-',
@@ -72,15 +74,13 @@ class TagihanPinjamenTable
                                     'Total Tagihan' => $record->total_tagihan,
                                     'Status' => $record->status,
                                 ]);
-                            }
+                            });
+                            
                             $writer->close();
                         }, 'Rekap_Tagihan_Pinjaman_' . date('Y_m_d_His') . '.' . $data['format']);
                     }),
             ])
-            ->actions([
-                \Filament\Actions\ViewAction::make(),
-                \Filament\Actions\EditAction::make(),
-            ])
+            ->actions(\App\Filament\Support\DefaultActionGroup::make('xl'))
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),

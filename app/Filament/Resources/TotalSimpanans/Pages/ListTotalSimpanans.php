@@ -10,6 +10,14 @@ class ListTotalSimpanans extends ListRecords
 {
     protected static string $resource = TotalSimpananResource::class;
 
+    public function getBreadcrumbs(): array
+    {
+        return [
+            url('/admin') => 'Dashboard',
+            '' => 'Total Simpanan',
+        ];
+    }
+
     protected function getHeaderActions(): array
     {
         return [];

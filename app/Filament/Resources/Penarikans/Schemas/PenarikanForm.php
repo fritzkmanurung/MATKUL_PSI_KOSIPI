@@ -17,14 +17,20 @@ class PenarikanForm
                     ->searchable()
                     ->preload()
                     ->required()
+                    ->disabled(fn (?\Illuminate\Database\Eloquent\Model $record) => $record !== null)
+                    ->dehydrated()
                     ->label('Anggota yang Menarik Saldo'),
                 Forms\Components\TextInput::make('nominal_penarikan')
                     ->required()
                     ->numeric()
                     ->prefix('Rp')
+                    ->disabled(fn (?\Illuminate\Database\Eloquent\Model $record) => $record !== null)
+                    ->dehydrated()
                     ->maxValue(9999999999),
                 Forms\Components\DatePicker::make('tanggal_penarikan')
                     ->default(now())
+                    ->disabled(fn (?\Illuminate\Database\Eloquent\Model $record) => $record !== null)
+                    ->dehydrated()
                     ->required(),
                 Forms\Components\Select::make('status')
                     ->options([
@@ -33,13 +39,17 @@ class PenarikanForm
                         'Ditolak' => 'Ditolak',
                     ])
                     ->default('Menunggu')
-                    ->required(),
+                    ->required()
+                    ->live(),
                 Forms\Components\FileUpload::make('bukti_penarikan')
                     ->image()
                     ->directory('bukti-penarikan')
+                    ->disabled(fn (?\Illuminate\Database\Eloquent\Model $record) => $record !== null)
+                    ->dehydrated()
                     ->columnSpanFull(),
                 Forms\Components\Textarea::make('catatan_penolakan')
-                    ->label('Catatan Penolakan (Jika ditolak)')
+                    ->label('Catatan Penolakan (Wajib diisi saat menolak)')
+                    ->visible(fn ($get) => $get('status') === 'Ditolak')
                     ->columnSpanFull(),
             ]);
     }

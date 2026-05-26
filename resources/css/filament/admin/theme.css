@@ -2,6 +2,7 @@
 
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
+@source '../../../../resources/views/components/**/*';
 
 @layer base {
     /* Responsive font scale injection for mobile-first */
@@ -22,5 +23,45 @@
     
     .fi-ta-record {
         @apply [&>td]:px-2 [&>td]:py-1 md:[&>td]:px-4 md:[&>td]:py-3;
+    }
+
+    /* Premium Shadows for Cards & Tables */
+    .fi-section, 
+    .fi-ta {
+        box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -2px rgba(0, 0, 0, 0.03) !important;
+        transition: box-shadow 0.25s ease-in-out;
+    }
+
+    .fi-section:hover {
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    .fi-wi-widget {
+        box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -2px rgba(0, 0, 0, 0.03) !important;
+        transition: box-shadow 0.25s ease-in-out, transform 0.25s ease-in-out !important;
+    }
+
+    .fi-wi-widget:hover {
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.05) !important;
+        transform: translateY(-2px);
+    }
+
+    /* Customizing the main content area */
+    .fi-main {
+        @apply bg-gray-50/50 dark:bg-gray-950/50;
+    }
+
+    /* Hide page title, keep breadcrumbs only */
+    .fi-header-heading {
+        @apply hidden;
+    }
+
+    /* Reduce gap and padding in main page */
+    .fi-page > header {
+        @apply mb-4;
+    }
+    
+    .fi-page-content > div {
+        @apply gap-4 md:gap-6;
     }
 }

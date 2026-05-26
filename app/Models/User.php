@@ -20,7 +20,7 @@ use Spatie\Permission\Traits\HasRoles;
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements FilamentUser
 {
-    protected $guarded = [];
+    protected $fillable = ['name', 'email', 'password', 'email_verified_at'];
 
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, HasRoles;
@@ -31,11 +31,11 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(Panel $panel): bool
     {
         if ($panel->getId() === 'admin') {
-            return $this->hasRole(['super_admin', 'admin', 'bendahara', 'pengawas', 'Super Admin', 'Admin', 'Bendahara', 'Pengawas']);
+            return $this->hasRole(['superadmin', 'ketua', 'sekretaris', 'bendahara']);
         }
         
         if ($panel->getId() === 'member') {
-            return $this->hasRole(['anggota', 'Anggota']);
+            return $this->hasRole(['anggota']);
         }
 
         return false;
@@ -54,23 +54,9 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
-    public function agama()
+    public function member()
     {
-        return $this->belongsTo(Agama::class);
+        return $this->hasOne(\Modules\Keanggotaan\Models\Member::class);
     }
 
-    public function unitKerja()
-    {
-        return $this->belongsTo(UnitKerja::class);
-    }
-
-    public function instansi()
-    {
-        return $this->belongsTo(Instansi::class);
-    }
-
-    public function status()
-    {
-        return $this->belongsTo(Status::class);
-    }
 }

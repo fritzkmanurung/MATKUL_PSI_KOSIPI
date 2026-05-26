@@ -2,8 +2,6 @@
 
 namespace App\Filament\Member\Resources\SimpananAnggotas;
 
-use App\Filament\Member\Resources\SimpananAnggotas\Pages\CreateSimpananAnggota;
-use App\Filament\Member\Resources\SimpananAnggotas\Pages\EditSimpananAnggota;
 use App\Filament\Member\Resources\SimpananAnggotas\Pages\ListSimpananAnggotas;
 use App\Filament\Member\Resources\SimpananAnggotas\Pages\ViewSimpananAnggota;
 use App\Filament\Member\Resources\SimpananAnggotas\Schemas\SimpananAnggotaForm;
@@ -22,8 +20,8 @@ class SimpananAnggotaResource extends Resource
 {
     protected static ?string $model = Simpanan::class;
 
-    protected static ?string $modelLabel = 'Simpanan Anda';
-    protected static ?string $pluralModelLabel = 'Tabungan Saya';
+    protected static ?string $modelLabel = 'Data Simpanan';
+    protected static ?string $pluralModelLabel = 'Data Simpanan';
 
     public static function getEloquentQuery(): Builder
     {
@@ -33,6 +31,13 @@ class SimpananAnggotaResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedWallet;
     protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationLabel = 'Simpanan';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Simpanan';
+    }
 
     protected static ?string $recordTitleAttribute = 'id';
 
@@ -62,14 +67,48 @@ class SimpananAnggotaResource extends Resource
     {
         return [
             'index' => ListSimpananAnggotas::route('/'),
-            'create' => CreateSimpananAnggota::route('/create'),
-            'view' => ViewSimpananAnggota::route('/{record}'),
-            'edit' => EditSimpananAnggota::route('/{record}/edit'),
+            // 'create' => CreateSimpananAnggota::route('/create'),
+            // 'edit' => EditSimpananAnggota::route('/{record}/edit'),
         ];
     }
 
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery();
+    }
+
+    public static function canEdit(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return in_array($record->status, ['Menunggu', 'Revisi', 'Ditolak']);
+    }
+
+    public static function canDelete(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return $record->status === 'Menunggu';
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return true;
+    }
+
+    public static function canForceDelete(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return false;
+    }
+
+    public static function canForceDeleteAny(): bool
+    {
+        return false;
+    }
+
+    public static function canRestore(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return false;
+    }
+
+    public static function canRestoreAny(): bool
+    {
+        return false;
     }
 }

@@ -18,25 +18,7 @@ class EditProfile extends BaseEditProfile
                 $this->getPasswordFormComponent(),
                 $this->getPasswordConfirmationFormComponent(),
 
-                // Fields Profil Kreditur (tambahan)
-                TextInput::make('pekerjaan')
-                    ->label('Pekerjaan')
-                    ->default(null),
-                Select::make('status_pegawai')
-                    ->label('Status Pegawai')
-                    ->options([
-                        'PNS' => 'PNS',
-                        'PPPK' => 'PPPK',
-                        'Honorer' => 'Honorer',
-                        'Swasta' => 'Swasta',
-                        'Wiraswasta' => 'Wiraswasta',
-                        'Lainnya' => 'Lainnya',
-                    ])
-                    ->default(null),
-                TextInput::make('masa_kontrak')
-                    ->label('Masa Kontrak (Bulan)')
-                    ->numeric()
-                    ->default(null),
+                // Fields Profil Tambahan
                 Select::make('status_perkawinan')
                     ->label('Status Perkawinan')
                     ->options([

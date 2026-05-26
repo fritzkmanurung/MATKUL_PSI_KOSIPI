@@ -9,11 +9,30 @@ use Filament\Resources\Pages\ListRecords;
 class ListSimpanans extends ListRecords
 {
     protected static string $resource = SimpananResource::class;
+    
+    public function getBreadcrumbs(): array
+    {
+        return [
+            url('/admin') => 'Dashboard',
+            '' => 'Simpanan',
+        ];
+    }
 
     protected function getHeaderActions(): array
     {
+        return [];
+    }
+
+    public function getTabs(): array
+    {
         return [
-            CreateAction::make(),
+            'Semua' => \Filament\Schemas\Components\Tabs\Tab::make(),
+            'Pokok' => \Filament\Schemas\Components\Tabs\Tab::make()
+                ->modifyQueryUsing(fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('jenis_simpanan', 'Pokok')),
+            'Wajib' => \Filament\Schemas\Components\Tabs\Tab::make()
+                ->modifyQueryUsing(fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('jenis_simpanan', 'Wajib')),
+            'Sukarela' => \Filament\Schemas\Components\Tabs\Tab::make()
+                ->modifyQueryUsing(fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('jenis_simpanan', 'Sukarela')),
         ];
     }
 }

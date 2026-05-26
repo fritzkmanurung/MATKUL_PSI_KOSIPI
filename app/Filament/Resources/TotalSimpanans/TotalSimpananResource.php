@@ -27,7 +27,9 @@ class TotalSimpananResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedChartBar;
 
-    protected static ?string $navigationLabel = 'Total Simpanan';
+    protected static ?string $navigationLabel = 'Rekap Saldo';
+    protected static ?string $modelLabel = 'Rekap Saldo';
+    protected static ?string $pluralModelLabel = 'Rekap Saldo';
     protected static \UnitEnum|string|null $navigationGroup = 'Simpanan';
     protected static ?int $navigationSort = 3;
 

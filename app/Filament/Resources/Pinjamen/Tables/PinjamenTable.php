@@ -10,6 +10,9 @@ use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use App\Filament\Support\MoneyFormatter;
+use App\Filament\Support\StatusHelper;
+use Filament\Tables\Columns\TextColumn;
 
 class PinjamenTable
 {
@@ -17,26 +20,21 @@ class PinjamenTable
     {
         return $table
             ->columns([
-                \Filament\Tables\Columns\TextColumn::make('kode_pinjaman')
+                TextColumn::make('kode_pinjaman')
                     ->searchable(),
-                \Filament\Tables\Columns\TextColumn::make('user.name')
+                TextColumn::make('user.name')
                     ->label('Anggota')
                     ->sortable()
                     ->searchable(),
-                \Filament\Tables\Columns\TextColumn::make('jumlah_pinjaman')
-                    ->money('IDR')
-                    ->sortable(),
-                \Filament\Tables\Columns\TextColumn::make('tenor_bulan')
+                MoneyFormatter::rupiah(
+                    TextColumn::make('jumlah_pinjaman')
+                )->sortable(),
+                TextColumn::make('tenor_bulan')
                     ->numeric()
                     ->sortable(),
-                \Filament\Tables\Columns\TextColumn::make('status')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'Menunggu' => 'gray',
-                        'Disetujui' => 'primary',
-                        'Ditolak' => 'danger',
-                        'Lunas' => 'success',
-                    }),
+                StatusHelper::applyBadge(
+                    TextColumn::make('status')
+                ),
                 \Filament\Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -45,16 +43,7 @@ class PinjamenTable
             ->filters([
                 //
             ])
-            ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                    ForceDeleteBulkAction::make(),
-                    RestoreBulkAction::make(),
-                ]),
-            ]);
+            ->actions(\App\Filament\Support\DefaultActionGroup::make('xl'))
+            ->toolbarActions([]);
     }
 }
