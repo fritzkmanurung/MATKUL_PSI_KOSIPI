@@ -20,7 +20,8 @@ class StatusResource extends Resource
     protected static ?string $model = Status::class;
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCheckBadge;
     protected static \UnitEnum|string|null $navigationGroup = 'Data Master';
-    protected static ?string $navigationLabel = 'Status Kepegawaian';
+    protected static ?string $navigationLabel = 'Status';
+    protected static ?string $modelLabel = 'Status Kepegawaian';
     protected static ?int $navigationSort = 13;
 
     public static function form(Schema $schema): Schema
@@ -37,10 +38,7 @@ class StatusResource extends Resource
                 TextColumn::make('nama')->searchable()->sortable(),
                 TextColumn::make('created_at')->dateTime('d M Y')->label('Dibuat')->sortable(),
             ])
-            ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
-            ])
+            ->actions(\App\Filament\Support\DefaultActionGroup::make('sm'))
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
@@ -51,9 +49,7 @@ class StatusResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListStatuses::route('/'),
-            'create' => Pages\CreateStatus::route('/create'),
-            'edit' => Pages\EditStatus::route('/{record}/edit'),
+            'index' => Pages\ManageStatuses::route('/'),
         ];
     }
 }

@@ -10,6 +10,14 @@ class ListUsers extends ListRecords
 {
     protected static string $resource = UserResource::class;
 
+    public function getBreadcrumbs(): array
+    {
+        return [
+            url('/admin') => 'Dashboard',
+            '' => 'Anggota',
+        ];
+    }
+
     protected function getHeaderActions(): array
     {
         return [

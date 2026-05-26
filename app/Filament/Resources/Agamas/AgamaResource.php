@@ -37,10 +37,7 @@ class AgamaResource extends Resource
                 TextColumn::make('nama')->searchable()->sortable(),
                 TextColumn::make('created_at')->dateTime('d M Y')->label('Dibuat')->sortable(),
             ])
-            ->actions([
-                EditAction::make(),
-                DeleteAction::make(),
-            ])
+            ->actions(\App\Filament\Support\DefaultActionGroup::make('sm'))
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
@@ -51,9 +48,7 @@ class AgamaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAgamas::route('/'),
-            'create' => Pages\CreateAgama::route('/create'),
-            'edit' => Pages\EditAgama::route('/{record}/edit'),
+            'index' => Pages\ManageAgamas::route('/'),
         ];
     }
 }

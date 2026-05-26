@@ -32,8 +32,12 @@ class PenarikansTable
                     ->color(fn (string $state): string => match ($state) {
                         'Menunggu' => 'gray',
                         'Disetujui' => 'success',
+                        'Revisi' => 'warning',
                         'Ditolak' => 'danger',
                     }),
+                \Filament\Tables\Columns\ImageColumn::make('bukti_penarikan')
+                    ->circular()
+                    ->label('Bukti'),
                 \Filament\Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -42,16 +46,7 @@ class PenarikansTable
             ->filters([
                 //
             ])
-            ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                    ForceDeleteBulkAction::make(),
-                    RestoreBulkAction::make(),
-                ]),
-            ]);
+            ->actions(\App\Filament\Support\DefaultActionGroup::make('xl'))
+            ->toolbarActions([]);
     }
 }

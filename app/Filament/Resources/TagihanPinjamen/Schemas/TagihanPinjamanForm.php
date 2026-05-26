@@ -32,16 +32,23 @@ class TagihanPinjamanForm
                     ->options([
                         'Belum Dibayar' => 'Belum Dibayar',
                         'Menunggu Verifikasi' => 'Menunggu Verifikasi (Transfer)',
-                        'Lunas' => 'Lunas Pajak',
+                        'Lunas' => 'Lunas',
                         'Ditolak' => 'Ditolak',
                     ])
-                    ->required(),
+                    ->required()
+                    ->live(),
                 Forms\Components\FileUpload::make('bukti_bayar_transfer')
                     ->image()
                     ->directory('bukti-tagihan')
+                    ->disabled(fn (?\Illuminate\Database\Eloquent\Model $record) => $record !== null)
+                    ->dehydrated()
                     ->columnSpanFull(),
-                Forms\Components\DatePicker::make('tanggal_bayar'),
+                Forms\Components\DatePicker::make('tanggal_bayar')
+                    ->disabled(fn (?\Illuminate\Database\Eloquent\Model $record) => $record !== null)
+                    ->dehydrated(),
                 Forms\Components\Textarea::make('catatan_penolakan')
+                    ->label('Keterangan Penolakan (Wajib diisi saat menolak)')
+                    ->visible(fn ($get) => $get('status') === 'Ditolak')
                     ->columnSpanFull(),
             ]);
     }

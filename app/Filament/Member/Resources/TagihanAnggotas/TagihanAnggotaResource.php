@@ -20,8 +20,8 @@ class TagihanAnggotaResource extends Resource
 {
     protected static ?string $model = TagihanPinjaman::class;
 
-    protected static ?string $modelLabel = 'Tagihan Angsuran Pinjaman';
-    protected static ?string $pluralModelLabel = 'Tagihan Angsuran Pinjaman';
+    protected static ?string $modelLabel = 'Tagihan Pinjaman';
+    protected static ?string $pluralModelLabel = 'Tagihan Pinjaman';
 
     public static function getEloquentQuery(): Builder
     {
@@ -31,6 +31,13 @@ class TagihanAnggotaResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
     protected static ?int $navigationSort = 4;
+
+    protected static ?string $navigationLabel = 'Tagihan';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Pinjaman';
+    }
 
     protected static ?string $recordTitleAttribute = 'id';
 
@@ -63,5 +70,45 @@ class TagihanAnggotaResource extends Resource
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery();
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
+    public static function canEdit(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return in_array($record->status, ['Ditolak', 'Belum Dibayar']);
+    }
+
+    public static function canDelete(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return false;
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return false;
+    }
+
+    public static function canForceDelete(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return false;
+    }
+
+    public static function canForceDeleteAny(): bool
+    {
+        return false;
+    }
+
+    public static function canRestore(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return false;
+    }
+
+    public static function canRestoreAny(): bool
+    {
+        return false;
     }
 }

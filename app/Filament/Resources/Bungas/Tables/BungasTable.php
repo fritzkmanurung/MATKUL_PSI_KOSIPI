@@ -22,6 +22,13 @@ class BungasTable
                     ->sortable(),
                 \Filament\Tables\Columns\TextColumn::make('keterangan')
                     ->searchable(),
+                \Filament\Tables\Columns\IconColumn::make('is_aktif')
+                    ->label('Aktif')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('danger'),
                 \Filament\Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -30,14 +37,7 @@ class BungasTable
             ->filters([
                 //
             ])
-            ->recordActions([
-                ViewAction::make(),
-                EditAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->actions(\App\Filament\Support\DefaultActionGroup::make('md'))
+            ->toolbarActions([]);
     }
 }

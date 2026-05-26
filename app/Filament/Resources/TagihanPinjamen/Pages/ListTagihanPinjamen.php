@@ -10,10 +10,31 @@ class ListTagihanPinjamen extends ListRecords
 {
     protected static string $resource = TagihanPinjamanResource::class;
 
-    protected function getHeaderActions(): array
+    public function getBreadcrumbs(): array
     {
         return [
-            CreateAction::make(),
+            url('/admin') => 'Dashboard',
+            '' => 'Tagihan Pinjaman',
+        ];
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [];
+    }
+
+    public function getTabs(): array
+    {
+        return [
+            'Semua' => \Filament\Schemas\Components\Tabs\Tab::make(),
+            'Menunggu Verifikasi' => \Filament\Schemas\Components\Tabs\Tab::make()
+                ->modifyQueryUsing(fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('status', 'Menunggu Verifikasi')),
+            'Lunas' => \Filament\Schemas\Components\Tabs\Tab::make()
+                ->modifyQueryUsing(fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('status', 'Lunas')),
+            'Revisi' => \Filament\Schemas\Components\Tabs\Tab::make()
+                ->modifyQueryUsing(fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('status', 'Revisi')),
+            'Ditolak' => \Filament\Schemas\Components\Tabs\Tab::make()
+                ->modifyQueryUsing(fn (\Illuminate\Database\Eloquent\Builder $query) => $query->where('status', 'Ditolak')),
         ];
     }
 }

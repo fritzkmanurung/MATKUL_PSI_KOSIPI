@@ -22,8 +22,8 @@ class PinjamanAnggotaResource extends Resource
 {
     protected static ?string $model = Pinjaman::class;
 
-    protected static ?string $modelLabel = 'Pengajuan Kredit/Pinjaman';
-    protected static ?string $pluralModelLabel = 'Pinjaman Saya';
+    protected static ?string $modelLabel = 'Data Pinjaman';
+    protected static ?string $pluralModelLabel = 'Data Pinjaman';
 
     public static function getEloquentQuery(): Builder
     {
@@ -33,6 +33,13 @@ class PinjamanAnggotaResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;
     protected static ?int $navigationSort = 2;
+
+    protected static ?string $navigationLabel = 'Pinjaman';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Pinjaman';
+    }
 
     protected static ?string $recordTitleAttribute = 'id';
 
@@ -71,5 +78,40 @@ class PinjamanAnggotaResource extends Resource
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery();
+    }
+
+    public static function canEdit(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return in_array($record->status, ['Ditolak', 'Ditolak Dokumen', 'Menunggu Dokumen']);
+    }
+
+    public static function canDelete(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return false;
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return false;
+    }
+
+    public static function canForceDelete(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return false;
+    }
+
+    public static function canForceDeleteAny(): bool
+    {
+        return false;
+    }
+
+    public static function canRestore(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return false;
+    }
+
+    public static function canRestoreAny(): bool
+    {
+        return false;
     }
 }

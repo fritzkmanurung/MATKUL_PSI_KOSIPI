@@ -12,8 +12,13 @@ class ListPinjamanAnggotas extends ListRecords
 
     protected function getHeaderActions(): array
     {
+        $userId = auth()->id();
+        $hasAktif = \Modules\Pinjaman\Models\Pinjaman::hasAktifPinjaman($userId);
+        $tunggakan = \Modules\Pinjaman\Models\Pinjaman::hasTunggakan($userId);
+
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->visible(!$hasAktif && !$tunggakan['ada_tunggakan']),
         ];
     }
 }

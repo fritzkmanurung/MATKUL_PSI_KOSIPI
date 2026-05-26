@@ -17,10 +17,10 @@ class RoleSeeder extends Seeder
     {
         // Define default roles
         $roles = [
-            'super_admin', // Default Filament Shield Panel role
-            'admin',
+            'superadmin',
+            'ketua',
+            'sekretaris',
             'bendahara',
-            'pengawas',
             'anggota',
         ];
 
@@ -37,6 +37,10 @@ class RoleSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
 
-        $admin->assignRole('super_admin');
+        $admin->assignRole('superadmin');
+
+        // CATATAN: Jalankan `php artisan shield:generate --all` secara manual
+        // setelah seeding untuk generate Shield permissions (command ini interaktif).
+        // Semua permissions keuangan sudah dibuat di DemoAccountSeeder.
     }
 }
