@@ -13,7 +13,9 @@ class Penarikan extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'user_id', 'simpanan_id', 'nominal_penarikan', 'alasan', 'status', 'catatan_penolakan',
+    ];
 
     public function user()
     {
@@ -24,11 +26,6 @@ class Penarikan extends Model
     {
         return $this->belongsTo(Simpanan::class);
     }
-
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
 
     // protected static function newFactory(): PenarikanFactory
     // {

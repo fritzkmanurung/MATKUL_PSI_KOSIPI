@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->decimal('nominal_simpanan', 12, 2);
+            $table->decimal('denda', 12, 2)->default(0);
             $table->enum('jenis_simpanan', ['Wajib', 'Sukarela', 'Pokok']);
             $table->date('waktu_simpanan')->nullable();
             $table->string('periode', 50)->nullable();
