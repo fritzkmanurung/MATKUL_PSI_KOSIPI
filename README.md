@@ -1,58 +1,128 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# KOSIPI (Koperasi Simpan Pinjam) - HMVC & Filament
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+KOSIPI adalah sistem informasi Koperasi Simpan Pinjam (KOSIPI) modern yang dirancang menggunakan arsitektur HMVC (Hierarchical Model-View-Controller) pada kerangka kerja Laravel dan antarmuka Filament PHP. Sistem ini membagi fitur-fiturnya ke dalam modul independen dan menyediakan dua panel utama (Admin Portal dan Member Portal) dengan kontrol akses berbasis peran (Role-Based Access Control / RBAC).
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Fitur Utama Sistem
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Sistem KOSIPI dibagi menjadi beberapa modul dan panel fungsional berikut:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 1. Panel Administrasi (Admin Portal)
+Dapat diakses oleh peran pengelola (Super Admin, Ketua, Bendahara, dan Sekretaris) untuk mengelola seluruh aspek operasional koperasi:
+* **Manajemen Pengguna**: Pengelolaan hak akses peran dan izin pengguna secara granular menggunakan Filament Shield (Spatie Permission).
+* **Data Master Sistem**: Konfigurasi parameter koperasi seperti daftar unit kerja, instansi terafiliasi, status kepegawaian anggota, dan opsi agama.
+* **Pengaturan Finansial**: Pengelolaan besaran bunga pinjaman, besaran denda keterlambatan, dan tenggat waktu pembayaran.
 
-## Learning Laravel
+### 2. Portal Anggota (Member Portal)
+Portal mandiri (self-service) bagi anggota koperasi untuk melacak aktivitas keuangan mereka:
+* **Dasbor Keuangan Anggota**: Visualisasi data ringkasan simpanan, tagihan aktif, serta status transaksi terakhir.
+* **Buku Transaksi**: Riwayat mutasi simpanan dan pembayaran angsuran pinjaman.
+* **Manajemen Profil**: Pengkinian data pribadi anggota secara langsung dari portal.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 3. Modul Keanggotaan (Membership Module)
+* Pengelolaan data anggota koperasi secara mendalam termasuk pencatatan NBA (Nomor Buku Anggota), NIP, NIK, instansi asal, status pernikahan, ahli waris, serta tanggal bergabung.
+* Sinkronisasi otomatis antara akun pengguna (User) dengan entitas keanggotaan (Member).
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 4. Modul Simpanan (Deposit Module)
+* **Jenis Simpanan**: Mendukung pencatatan Simpanan Pokok, Simpanan Wajib, dan Simpanan Sukarela.
+* **Penarikan Sukarela**: Anggota dapat mengajukan penarikan simpanan sukarela dengan validasi batas saldo maksimal penarikan secara waktu nyata.
+* **Rekonsiliasi Saldo**: Pencatatan total akumulasi simpanan anggota untuk pelaporan keuangan yang akurat.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### 5. Modul Pinjaman (Loan Module)
+* **Pengajuan Pinjaman**: Anggota dapat mengajukan pinjaman dengan nominal tertentu yang akan diverifikasi oleh pihak pengelola.
+* **Penjadwalan Tagihan Otomatis**: Pembuatan otomatis jadwal angsuran bulanan (tagihan pinjaman) beserta perhitungan bunga dan kalkulasi denda jika melewati tenggat waktu.
 
-## Agentic Development
+---
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## Arsitektur Sistem
 
+Proyek ini mengadopsi pola HMVC menggunakan paket `nwidart/laravel-modules` untuk modularisasi kode. Struktur folder modul terletak di direktori `Modules/` yang memisahkan logika bisnis masing-masing domain:
+* **Modules/Keanggotaan**: Model, migrasi basis data, dan kebijakan keanggotaan.
+* **Modules/Simpanan**: Logika transaksi simpanan, penarikan, dan pencatatan saldo.
+* **Modules/Pinjaman**: Logika pengajuan pinjaman, amortisasi tagihan angsuran, dan pembayaran.
+* **Modules/Sistem**: Konfigurasi parameter operasional koperasi.
+
+---
+
+## Panduan Instalasi Lokal
+
+Ikuti langkah-langkah di bawah ini untuk memasang dan menjalankan proyek KOSIPI di lingkungan lokal Anda:
+
+### Prasyarat
+Sebelum memulai, pastikan perangkat Anda telah terpasang:
+* PHP versi 8.2 atau lebih tinggi
+* Composer
+* Node.js & NPM
+* Server Basis Data (MySQL, PostgreSQL, atau SQLite)
+
+### Langkah 1: Kloning Repositori
+Kloning repositori proyek dari GitHub ke perangkat lokal Anda:
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/fritzkmanurung/MATKUL_PSI_KOSIPI.git
+cd MATKUL_PSI_KOSIPI
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### Langkah 2: Instal Dependensi
+Instal pustaka PHP melalui Composer dan pustaka Javascript melalui NPM:
+```bash
+composer install
+npm install
+```
 
-## Contributing
+### Langkah 3: Konfigurasi Lingkungan (.env)
+Salin berkas contoh konfigurasi `.env.example` menjadi `.env` lalu buat kunci enkripsi aplikasi:
+```bash
+copy .env.example .env
+php artisan key:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Sesuaikan konfigurasi basis data Anda di dalam berkas `.env` yang baru dibuat (misalnya konfigurasi MySQL atau SQLite). Jika menggunakan SQLite:
+```env
+DB_CONNECTION=sqlite
+# Kosongkan konfigurasi DB_HOST, DB_PORT, DB_DATABASE, DB_USERNAME, dan DB_PASSWORD untuk SQLite default
+```
+*Catatan: Jika menggunakan SQLite, pastikan berkas basis data kosong `database/database.sqlite` telah dibuat terlebih dahulu.*
 
-## Code of Conduct
+### Langkah 4: Migrasi dan Seed Basis Data
+Jalankan migrasi basis data untuk membuat tabel-tabel sistem, diikuti dengan menjalankan seed untuk mengisi data master awal dan akun demo:
+```bash
+php artisan migrate --seed
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Langkah 5: Jalankan Aplikasi
+Jalankan server lokal Laravel dan compiler aset Vite:
 
-## Security Vulnerabilities
+Buka terminal pertama untuk menjalankan Laravel Development Server:
+```bash
+php artisan serve
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Buka terminal kedua untuk menjalankan Vite Development Server:
+```bash
+npm run dev
+```
 
-## License
+Aplikasi kini dapat diakses melalui browser Anda di URL:
+* **Portal Utama**: http://127.0.0.1:8000
+* **Admin Portal**: http://127.0.0.1:8000/admin
+* **Member Portal**: http://127.0.0.1:8000/member
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## Akun Demo untuk Pengujian
+
+Gunakan akun demo berikut yang telah dibuat secara otomatis oleh seeder untuk menguji berbagai peran di dalam sistem (kata sandi untuk semua akun demo adalah `password`):
+
+| Peran (Role) | Alamat Email | Kata Sandi | Deskripsi Akses |
+| --- | --- | --- | --- |
+| Super Admin | admin@kosipi.com | password | Akses penuh seluruh sistem dan manajemen hak akses |
+| Ketua Koperasi | admin2@kosipi.com | password | Akses kelola data master dan keuangan tanpa manajemen otorisasi sistem |
+| Bendahara | bendahara@kosipi.com | password | Kelola transaksi simpanan, penarikan, dan pinjaman |
+| Sekretaris | pengawas@kosipi.com | password | Read-only data keuangan dan kelola penuh data keanggotaan |
+| Anggota (Member) | anggota@kosipi.com | password | Akses ke portal self-service member untuk memantau tabungan dan pinjaman |
+
+---
+
+## Lisensi
+Sistem ini dirilis di bawah lisensi [MIT](LICENSE).
