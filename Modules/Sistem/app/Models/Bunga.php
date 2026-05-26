@@ -4,7 +4,6 @@ namespace Modules\Sistem\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Modules\Sistem\Database\Factories\BungaFactory;
 
 class Bunga extends Model
 {
@@ -12,13 +11,36 @@ class Bunga extends Model
 
     protected $guarded = [];
 
-    /**
-     * The attributes that are mass assignable.
-     */
-    protected $fillable = [];
+    protected $casts = [
+        'is_aktif' => 'boolean',
+    ];
 
-    // protected static function newFactory(): BungaFactory
-    // {
-    //     // return BungaFactory::new();
-    // }
+    /**
+     * Ambil bunga yang sedang aktif (hanya 1 yang boleh aktif).
+     */
+    public static function getAktif(): ?self
+    {
+        return static::where('is_aktif', true)->first();
+    }
+
+    /**
+     * Set bunga ini sebagai aktif, nonaktifkan semua yang lain.
+     */
+    public function setAktif(): void
+    {
+        static::where('id', '!=', $this->id)->update(['is_aktif' => false]);
+        $this->update(['is_aktif' => true]);
+    }
+
+    /**
+     * Boot: pastikan hanya 1 bunga aktif saat create/update.
+     */
+    protected static function booted()
+    {
+        static::saving(function ($bunga) {
+            if ($bunga->is_aktif) {
+                static::where('id', '!=', $bunga->id)->update(['is_aktif' => false]);
+            }
+        });
+    }
 }
